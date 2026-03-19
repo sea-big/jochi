@@ -1,0 +1,2888 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>株式会社上智 | 運送・解体・土木・舗装・農業</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ─── RESET & VARS ──────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--off-white);
+        color: var(--black);
+        font-family: var(--font-sans);
+        line-height: 1.7;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ul {
+        list-style: none;
+      }
+
+      :root {
+        /* Brand Colors */
+        --accent: #00429d;
+        --accent-light: #4a86e8;
+        --accent-dark: #002f6c;
+        --accent-bg: rgba(0, 66, 157, 0.05);
+        /* Neutral Colors */
+        --black: #1a1a1b;
+        --off-white: #faf9f6;
+        --gray: #666666;
+        --gray-light: #a8a49f;
+        --border: #e2ded8;
+        --surface: #f5f2ed;
+        /* Layout & Animation */
+        --max-w: 1200px;
+        --pad: clamp(24px, 5vw, 80px);
+        --section: clamp(80px, 12vw, 180px);
+        --font-min: "Shippori Mincho", serif;
+        --font-sans: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+        --ease: cubic-bezier(0.23, 1, 0.32, 1);
+        --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      /* ─── PROGRESS BAR ──────────────────────────────────── */
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        width: 0%;
+        background: var(--accent);
+        z-index: 1001;
+        transition: width 0.1s linear;
+      }
+
+      /* ─── NAV ───────────────────────────────────────────── */
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 0 var(--pad);
+        transition:
+          background 0.5s ease,
+          border-color 0.5s ease,
+          box-shadow 0.5s ease;
+      }
+      .nav.scrolled {
+        background: rgba(250, 250, 248, 0.96);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 1px 24px rgba(0, 0, 0, 0.05);
+      }
+      .nav-inner {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 68px;
+      }
+
+      /* Logo */
+      .nav-logo {
+        display: flex;
+        align-items: center;
+      }
+      .nav-logo img {
+        height: 36px;
+        width: auto;
+        display: block;
+        transition: opacity 0.35s ease;
+      }
+      .nav-logo .logo-hero {
+        opacity: 1;
+      }
+      .nav-logo .logo-light {
+        opacity: 0;
+        position: absolute;
+      }
+      .nav.scrolled .logo-hero {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .nav.scrolled .logo-light {
+        opacity: 1;
+        position: relative;
+        pointer-events: auto;
+      }
+      .nav.scrolled .logo-hero {
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+      .nav-links a {
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        position: relative;
+        transition: color 0.25s;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--accent);
+        transition: width 0.35s var(--ease);
+      }
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+      .nav.light .nav-links a {
+        color: rgba(255, 255, 255, 0.65);
+      }
+      .nav.light .nav-links a:hover {
+        color: #fff;
+      }
+      .nav.scrolled .nav-links a {
+        color: var(--gray);
+      }
+      .nav.scrolled .nav-links a:hover {
+        color: var(--black);
+      }
+
+      .nav-cta a {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        padding: 9px 20px;
+        background: var(--accent);
+        color: #fff;
+        transition:
+          background 0.25s,
+          transform 0.25s;
+      }
+      .nav-cta a:hover {
+        background: var(--accent-dark);
+        transform: translateY(-1px);
+      }
+
+      .nav-hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        padding: 4px;
+        cursor: pointer;
+      }
+      .nav-hamburger span {
+        display: block;
+        width: 22px;
+        height: 1.5px;
+        background: currentColor;
+        transition:
+          transform 0.35s var(--ease),
+          opacity 0.25s;
+      }
+      .nav.light .nav-hamburger {
+        color: #fff;
+      }
+      .nav.scrolled .nav-hamburger {
+        color: var(--black);
+      }
+      .nav-hamburger.open span:nth-child(1) {
+        transform: translateY(6.5px) rotate(45deg);
+      }
+      .nav-hamburger.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .nav-hamburger.open span:nth-child(3) {
+        transform: translateY(-6.5px) rotate(-45deg);
+      }
+
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: var(--off-white);
+        z-index: 999;
+        padding: 100px var(--pad) 60px;
+        flex-direction: column;
+      }
+      .mobile-menu.open {
+        display: flex;
+      }
+      .mobile-menu a {
+        font-family: var(--font-min);
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--black);
+        padding: 16px 0;
+        border-bottom: 1px solid var(--border);
+        transition:
+          color 0.2s,
+          padding-left 0.3s var(--ease);
+      }
+      .mobile-menu a:hover {
+        color: var(--accent);
+        padding-left: 12px;
+      }
+
+      /* ─── HERO ──────────────────────────────────────────── */
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: flex-end;
+        background: #0e0d0b;
+        overflow: hidden;
+      }
+      .hero-img-placeholder {
+        position: absolute;
+        inset: 0;
+        background: #1a1816;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        overflow: hidden;
+      }
+      .hero-img-placeholder::after {
+        content: "";
+        position: absolute;
+        inset: 20px;
+        border: 1.5px dashed rgba(255, 255, 255, 0.1);
+        pointer-events: none;
+      }
+      .img-ph-icon svg {
+        width: 44px;
+        height: 44px;
+        stroke: rgba(255, 255, 255, 0.18);
+        stroke-width: 1.5;
+      }
+      .img-ph-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.28em;
+        color: rgba(255, 255, 255, 0.2);
+        text-transform: uppercase;
+      }
+      .img-ph-size {
+        font-size: 9px;
+        letter-spacing: 0.12em;
+        color: rgba(255, 255, 255, 0.1);
+      }
+
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(14, 13, 11, 0.97) 0%,
+          rgba(14, 13, 11, 0.55) 45%,
+          rgba(14, 13, 11, 0.22) 100%
+        );
+        z-index: 1;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        padding: 110px var(--pad) clamp(60px, 10vw, 110px);
+        max-width: var(--max-w);
+        margin: 0 auto;
+      }
+      .hero-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.4);
+        margin-bottom: 28px;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.3s var(--ease) forwards;
+      }
+      .hero-eyebrow::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.3);
+      }
+      .hero-title {
+        font-family: var(--font-min);
+        font-size: clamp(56px, 9vw, 132px);
+        font-weight: 700;
+        line-height: 1.05;
+        color: #fff;
+        letter-spacing: -0.01em;
+        margin-bottom: 28px;
+        overflow: hidden;
+      }
+      .hero-title .line {
+        display: block;
+        overflow: hidden;
+      }
+      .hero-title .line span {
+        display: block;
+        transform: translateY(110%);
+        animation: slideUp 0.9s var(--ease) forwards;
+      }
+      .hero-title .line:nth-child(1) span {
+        animation-delay: 0.48s;
+      }
+      .hero-title .line:nth-child(2) span {
+        animation-delay: 0.62s;
+      }
+      .hero-title .line:nth-child(3) span {
+        animation-delay: 0.76s;
+      }
+      .hero-accent {
+        color: var(--accent-light);
+      }
+      .hero-copy {
+        font-size: clamp(14px, 1.3vw, 16px);
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.68);
+        line-height: 2;
+        max-width: 380px;
+        margin-bottom: 40px;
+        opacity: 0;
+        animation: fadeUp 0.8s 0.98s var(--ease) forwards;
+      }
+      .hero-actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        opacity: 0;
+        animation: fadeUp 0.8s 1.12s var(--ease) forwards;
+      }
+      .btn-solid {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 15px 32px;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.07em;
+        background: var(--accent);
+        color: #fff;
+        transition:
+          background 0.25s,
+          transform 0.3s var(--ease-spring),
+          box-shadow 0.3s;
+      }
+      .btn-solid:hover {
+        background: var(--accent-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 32px rgba(0, 66, 157, 0.28);
+      }
+      .btn-solid svg {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.3s var(--ease-spring);
+      }
+      .btn-solid:hover svg {
+        transform: translateX(4px);
+      }
+      .btn-ghost {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 32px;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.07em;
+        color: rgba(255, 255, 255, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition:
+          color 0.25s,
+          border-color 0.25s,
+          transform 0.3s var(--ease-spring);
+      }
+      .btn-ghost:hover {
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: translateY(-3px);
+      }
+      .btn-ghost svg {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.3s var(--ease-spring);
+      }
+      .btn-ghost:hover svg {
+        transform: translateX(4px);
+      }
+
+      .hero-stats {
+        display: flex;
+        gap: 44px;
+        flex-wrap: wrap;
+        margin-top: 60px;
+        padding-top: 36px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        opacity: 0;
+        animation: fadeUp 0.8s 1.3s var(--ease) forwards;
+      }
+      .stat-num {
+        font-family: var(--font-min);
+        font-size: clamp(38px, 5vw, 58px);
+        color: #fff;
+        line-height: 1;
+        font-weight: 700;
+      }
+      .stat-num em {
+        color: var(--accent-light);
+        font-style: normal;
+        font-size: 0.58em;
+      }
+      .stat-label {
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        color: rgba(255, 255, 255, 0.38);
+        margin-top: 6px;
+        text-transform: uppercase;
+      }
+      .scroll-hint {
+        position: absolute;
+        bottom: 40px;
+        right: var(--pad);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        z-index: 3;
+        opacity: 0;
+        animation: fadeIn 1s 1.55s ease forwards;
+      }
+      .scroll-hint span {
+        writing-mode: vertical-rl;
+        font-size: 8px;
+        letter-spacing: 0.24em;
+        color: rgba(255, 255, 255, 0.28);
+        text-transform: uppercase;
+      }
+      .scroll-line {
+        width: 1px;
+        height: 56px;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        animation: scrollPulse 2.2s ease-in-out infinite;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes slideUp {
+        from {
+          transform: translateY(110%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes scrollPulse {
+        0%,
+        100% {
+          transform: scaleY(1);
+          transform-origin: top;
+        }
+        50% {
+          transform: scaleY(0.45);
+          transform-origin: top;
+        }
+      }
+
+      /* ─── LAYOUT UTILS ──────────────────────────────────── */
+      .container {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        padding: 0 var(--pad);
+      }
+      .section-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 18px;
+      }
+      .section-tag::before {
+        content: "";
+        width: 22px;
+        height: 1px;
+        background: var(--accent);
+      }
+      .section-heading {
+        font-family: var(--font-min);
+        font-size: clamp(30px, 4.5vw, 56px);
+        font-weight: 700;
+        line-height: 1.1;
+        color: var(--black);
+        letter-spacing: -0.01em;
+      }
+      .section-heading em {
+        color: var(--accent);
+        font-style: normal;
+      }
+      .section-sub {
+        font-size: 15px;
+        font-weight: 400;
+        color: var(--gray);
+        line-height: 1.85;
+        max-width: 460px;
+        margin-top: 16px;
+      }
+
+      /* Reveal */
+      [data-reveal] {
+        opacity: 0;
+        transition:
+          opacity 0.85s var(--ease),
+          transform 0.85s var(--ease);
+      }
+      [data-reveal="up"] {
+        transform: translateY(40px);
+      }
+      [data-reveal="left"] {
+        transform: translateX(-40px);
+      }
+      [data-reveal="right"] {
+        transform: translateX(40px);
+      }
+      [data-reveal="scale"] {
+        transform: scale(0.93);
+      }
+      [data-reveal].visible {
+        opacity: 1;
+        transform: none;
+      }
+      [data-delay="1"] {
+        transition-delay: 0.1s;
+      }
+      [data-delay="2"] {
+        transition-delay: 0.2s;
+      }
+      [data-delay="3"] {
+        transition-delay: 0.3s;
+      }
+      [data-delay="4"] {
+        transition-delay: 0.4s;
+      }
+      [data-delay="5"] {
+        transition-delay: 0.5s;
+      }
+      [data-delay="6"] {
+        transition-delay: 0.6s;
+      }
+
+      /* ─── IMAGE PLACEHOLDER ─────────────────────────────── */
+      .img-ph {
+        background: #f0ede8;
+        border: 2px dashed #d0c8bf;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        position: relative;
+      }
+      .img-ph svg {
+        width: 28px;
+        height: 28px;
+        stroke: #b8b0a8;
+        stroke-width: 1.5;
+      }
+      .img-ph-text {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        color: #a8a098;
+        text-transform: uppercase;
+      }
+      .img-ph-size {
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        color: #b8b0a8;
+      }
+
+      /* ─── ABOUT ─────────────────────────────────────────── */
+      .about {
+        padding: var(--section) 0;
+      }
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(48px, 8vw, 100px);
+        align-items: center;
+      }
+      .about-img-wrap {
+        position: relative;
+      }
+      .about-img-main {
+        aspect-ratio: 4/5;
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.1);
+      }
+      .about-img-accent {
+        position: absolute;
+        bottom: -28px;
+        right: -28px;
+        width: 50%;
+        aspect-ratio: 1;
+        border: 6px solid var(--off-white);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        z-index: 2;
+      }
+      .about-badge {
+        position: absolute;
+        top: 28px;
+        left: -18px;
+        background: var(--accent);
+        color: #fff;
+        z-index: 3;
+        padding: 14px 18px;
+        text-align: center;
+      }
+      .about-badge-num {
+        font-family: var(--font-min);
+        font-size: 34px;
+        font-weight: 700;
+        line-height: 1;
+        display: block;
+      }
+      .about-badge-text {
+        font-size: 9px;
+        letter-spacing: 0.16em;
+        opacity: 0.8;
+        display: block;
+        margin-top: 3px;
+      }
+      .about-concept {
+        font-family: var(--font-min);
+        font-size: clamp(18px, 2vw, 24px);
+        font-weight: 700;
+        line-height: 1.65;
+        color: var(--black);
+        margin: 24px 0 18px;
+      }
+      .about-desc {
+        font-size: 15px;
+        font-weight: 400;
+        color: var(--gray);
+        line-height: 2;
+        margin-bottom: 40px;
+      }
+      .strengths {
+        border-top: 1px solid var(--border);
+      }
+      .strength-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 18px;
+        padding: 22px 0;
+        border-bottom: 1px solid var(--border);
+        transition: padding-left 0.35s var(--ease);
+      }
+      .strength-item:hover {
+        padding-left: 10px;
+      }
+      .strength-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+        margin-top: 9px;
+        flex-shrink: 0;
+      }
+      .strength-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--black);
+        margin-bottom: 5px;
+      }
+      .strength-desc {
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--gray);
+        line-height: 1.85;
+      }
+
+      /* ─── SERVICES ──────────────────────────────────────── */
+      .services {
+        padding: var(--section) 0;
+        background: var(--off-white);
+      }
+      .services .section-heading {
+        color: var(--black);
+      }
+      .services .section-tag {
+        color: var(--accent);
+      }
+      .services .section-tag::before {
+        background: var(--accent);
+      }
+      .services .section-sub {
+        color: var(--gray);
+        font-weight: 400;
+      }
+      .services-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 40px;
+        margin-bottom: 52px;
+        flex-wrap: wrap;
+      }
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--border);
+      }
+      .service-card {
+        background: var(--off-white);
+        padding: 36px 28px;
+        position: relative;
+        overflow: hidden;
+        transition:
+          background 0.4s ease,
+          box-shadow 0.4s ease;
+      }
+      .service-card::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--accent);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.5s var(--ease);
+      }
+      .service-card:hover {
+        background: #fff;
+        box-shadow: 0 8px 32px rgba(0, 66, 157, 0.08);
+      }
+      .service-card:hover::before {
+        transform: scaleX(1);
+      }
+      .service-num {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        color: var(--accent-light);
+        margin-bottom: 22px;
+        display: block;
+        opacity: 0.7;
+      }
+      .service-title {
+        font-family: var(--font-min);
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--black);
+        margin-bottom: 12px;
+        line-height: 1.3;
+        transition: color 0.25s;
+      }
+      .service-card:hover .service-title {
+        color: var(--accent);
+      }
+      .service-desc {
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--gray);
+        line-height: 1.85;
+        margin-bottom: 22px;
+      }
+      .service-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .service-tag {
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        padding: 4px 10px;
+        border: 1px solid var(--border);
+        color: var(--gray-light);
+        transition:
+          border-color 0.25s,
+          color 0.25s;
+      }
+      .service-card:hover .service-tag {
+        border-color: rgba(0, 66, 157, 0.3);
+        color: var(--accent);
+      }
+
+      /* ─── WORKS ─────────────────────────────────────────── */
+      .works {
+        padding: var(--section) 0;
+      }
+      .works-head {
+        margin-bottom: 44px;
+      }
+      .works-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 12px;
+      }
+      .work-item {
+        position: relative;
+        overflow: hidden;
+      }
+      .work-item:nth-child(1) {
+        grid-column: span 7;
+      }
+      .work-item:nth-child(2) {
+        grid-column: span 5;
+      }
+      .work-item:nth-child(3) {
+        grid-column: span 4;
+      }
+      .work-item:nth-child(4) {
+        grid-column: span 4;
+      }
+      .work-item:nth-child(5) {
+        grid-column: span 4;
+      }
+      .work-item:hover .work-img-wrap img {
+        transform: scale(1.06);
+      }
+
+      .work-ph {
+        width: 100%;
+        background: #f0ede8;
+        border: 2px dashed #d0c8bf;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+      .work-item:nth-child(1) .work-ph {
+        min-height: 400px;
+      }
+      .work-ph {
+        min-height: 200px;
+      }
+      .work-ph svg {
+        width: 26px;
+        height: 26px;
+        stroke: #b8b0a8;
+        stroke-width: 1.5;
+      }
+      .work-ph-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        color: #a8a098;
+        text-transform: uppercase;
+      }
+      .work-ph-desc {
+        font-size: 10px;
+        color: #b8b0a8;
+        letter-spacing: 0.08em;
+      }
+
+      .work-info {
+        padding: 16px 0 0;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .work-cat {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        color: var(--accent);
+        text-transform: uppercase;
+        margin-bottom: 5px;
+      }
+      .work-name {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--black);
+        line-height: 1.4;
+      }
+      .work-arrow {
+        width: 30px;
+        height: 30px;
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition:
+          background 0.25s,
+          border-color 0.25s,
+          transform 0.35s var(--ease-spring);
+      }
+      .work-item:hover .work-arrow {
+        background: var(--accent);
+        border-color: var(--accent);
+        transform: rotate(-45deg);
+      }
+      .work-arrow svg {
+        width: 13px;
+        height: 13px;
+        stroke: var(--gray);
+        transition: stroke 0.25s;
+      }
+      .work-item:hover .work-arrow svg {
+        stroke: #fff;
+      }
+
+      /* ─── VEHICLES ──────────────────────────────────────── */
+      .vehicles {
+        padding: var(--section) 0;
+        background: var(--surface);
+      }
+      .vehicles-head {
+        margin-bottom: 44px;
+      }
+      .vehicles-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--border);
+      }
+      .vehicle-card {
+        background: var(--off-white);
+        padding: 26px 22px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        transition:
+          background 0.3s,
+          transform 0.4s var(--ease);
+      }
+      .vehicle-card:hover {
+        background: #fff;
+        transform: translateX(6px);
+      }
+      .vehicle-icon {
+        width: 46px;
+        height: 46px;
+        flex-shrink: 0;
+        background: var(--accent-bg);
+        border: 1px solid rgba(0, 66, 157, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .vehicle-icon svg {
+        width: 21px;
+        height: 21px;
+        stroke: var(--accent);
+        stroke-width: 1.5;
+      }
+      .vehicle-name {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--black);
+        margin-bottom: 4px;
+      }
+      .vehicle-count-num {
+        font-family: var(--font-min);
+        font-size: 30px;
+        color: var(--accent);
+        line-height: 1;
+        font-weight: 700;
+      }
+      .vehicle-count-unit {
+        font-size: 13px;
+        color: var(--gray);
+        margin-left: 2px;
+        font-weight: 500;
+      }
+
+      .vehicles-total {
+        margin-top: 1px;
+        background: var(--accent);
+        padding: 26px 36px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .vehicles-total-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.24em;
+        color: rgba(255, 255, 255, 0.75);
+      }
+      .vehicles-total-sub {
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.65);
+        margin-top: 4px;
+      }
+      .vehicles-total-num {
+        font-family: var(--font-min);
+        font-size: 54px;
+        color: #fff;
+        line-height: 1;
+        font-weight: 700;
+      }
+      .vehicles-total-unit {
+        font-size: 17px;
+        font-family: var(--font-sans);
+        font-weight: 400;
+      }
+
+      /* ─── AREA ──────────────────────────────────────────── */
+      .area {
+        padding: var(--section) 0;
+      }
+      .area-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(48px, 8vw, 96px);
+        align-items: flex-start;
+      }
+      .area-list-block {
+        padding: 36px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+      }
+      .area-list-title {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        color: var(--gray);
+        margin-bottom: 18px;
+        text-transform: uppercase;
+      }
+      .area-prefs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .area-pref {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--black);
+        padding: 6px 14px;
+        background: var(--off-white);
+        border: 1px solid var(--border);
+        transition:
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .area-pref:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .area-pref.highlight {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+        font-weight: 600;
+      }
+      .area-pref.highlight:hover {
+        background: var(--accent-dark);
+        border-color: var(--accent-dark);
+        color: #fff;
+      }
+
+      .area-description {
+        font-size: 15px;
+        font-weight: 400;
+        color: var(--gray);
+        line-height: 2;
+        margin: 22px 0 30px;
+      }
+      .area-sub-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        color: var(--gray);
+        display: block;
+        margin: 22px 0 12px;
+      }
+      .area-note {
+        padding: 18px 22px;
+        background: var(--accent-bg);
+        border-left: 3px solid var(--accent);
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--black);
+        line-height: 1.75;
+        margin-top: 28px;
+      }
+
+      /* ─── COMPANY ───────────────────────────────────────── */
+      .company {
+        padding: var(--section) 0;
+        background: var(--surface);
+      }
+      .company-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: clamp(48px, 8vw, 100px);
+        align-items: flex-start;
+      }
+      .company-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .company-table tr {
+        border-bottom: 1px solid var(--border);
+      }
+      .company-table tr:hover {
+        background: var(--accent-bg);
+      }
+      .company-table th {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--gray-light);
+        text-align: left;
+        padding: 20px 14px 20px 0;
+        white-space: nowrap;
+        width: 120px;
+        vertical-align: top;
+      }
+      .company-table td {
+        font-size: 15px;
+        color: var(--black);
+        padding: 20px 0;
+        line-height: 1.8;
+      }
+      .company-table td strong {
+        color: var(--black);
+        font-weight: 700;
+      }
+      .company-table td a {
+        color: var(--accent);
+        font-weight: 600;
+      }
+      .company-table td .accent {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .company-map-card {
+        background: var(--off-white);
+        border: 1px solid var(--border);
+        overflow: hidden;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
+      }
+      .company-map-header {
+        padding: 16px 22px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .map-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+        animation: pulse 2.5s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(0, 66, 157, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 0 6px rgba(0, 66, 157, 0);
+        }
+      }
+      .company-map-header span {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        color: var(--gray);
+      }
+      .company-map-body {
+        padding: 28px 22px;
+      }
+      .company-map-address {
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--gray);
+        line-height: 1.9;
+        margin-bottom: 18px;
+      }
+      .company-map-address strong {
+        display: block;
+        font-size: 16px;
+        color: var(--black);
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .company-map-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+        margin-top: 14px;
+        border-bottom: 1px solid rgba(0, 66, 157, 0.3);
+        padding-bottom: 2px;
+        transition: border-color 0.2s;
+      }
+      .company-map-link:hover {
+        border-color: var(--accent);
+      }
+
+      /* ─── NEWS ──────────────────────────────────────────── */
+      .news {
+        padding: var(--section) 0;
+      }
+      .news-inner {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: clamp(48px, 8vw, 96px);
+        align-items: flex-start;
+      }
+      .news-sticky {
+        position: sticky;
+        top: 90px;
+      }
+      .news-btn-all {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 28px;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+        border-bottom: 1px solid rgba(0, 66, 157, 0.3);
+        padding-bottom: 3px;
+        transition:
+          gap 0.3s var(--ease-spring),
+          border-color 0.2s;
+      }
+      .news-btn-all:hover {
+        gap: 14px;
+        border-color: var(--accent);
+      }
+      .news-btn-all svg {
+        width: 13px;
+        height: 13px;
+      }
+
+      .news-list {
+        display: flex;
+        flex-direction: column;
+      }
+      .news-item {
+        display: grid;
+        grid-template-columns: 96px 1fr;
+        gap: 20px;
+        align-items: flex-start;
+        padding: 22px 0;
+        border-bottom: 1px solid var(--border);
+        transition: padding-left 0.35s var(--ease);
+      }
+      .news-item:hover {
+        padding-left: 10px;
+      }
+      .news-date {
+        font-size: 13px;
+        color: var(--gray-light);
+        font-weight: 500;
+        padding-top: 3px;
+        letter-spacing: 0.03em;
+      }
+      .news-tag {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        padding: 3px 10px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .news-tag.info {
+        background: rgba(0, 66, 157, 0.08);
+        color: var(--accent);
+      }
+      .news-tag.work {
+        background: rgba(0, 66, 157, 0.06);
+        color: var(--accent);
+      }
+      .news-tag.event {
+        background: rgba(5, 150, 105, 0.08);
+        color: #059669;
+      }
+      .news-title {
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--black);
+        line-height: 1.65;
+        transition: color 0.2s;
+      }
+      .news-item:hover .news-title {
+        color: var(--accent);
+      }
+
+      /* ─── HOURS ─────────────────────────────────────────── */
+      .hours {
+        padding: 44px 0;
+        background: var(--off-white);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+      .hours-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+        flex-wrap: wrap;
+      }
+      .hours-heading {
+        font-family: var(--font-min);
+        font-size: clamp(18px, 3vw, 26px);
+        font-weight: 700;
+        color: var(--black);
+      }
+      .hours-cards {
+        display: flex;
+        gap: 1px;
+        background: var(--border);
+        flex-wrap: wrap;
+      }
+      .hours-card {
+        background: var(--off-white);
+        padding: 18px 22px;
+        min-width: 120px;
+      }
+      .hours-card-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        color: var(--gray-light);
+        margin-bottom: 7px;
+        text-transform: uppercase;
+      }
+      .hours-card-time {
+        font-family: var(--font-sans);
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--black);
+      }
+      .hours-card.closed .hours-card-time {
+        color: var(--gray-light);
+        font-weight: 500;
+      }
+      .hours-card-sub {
+        font-size: 11px;
+        color: var(--gray-light);
+        margin-top: 4px;
+      }
+      .hours-card.accent {
+        background: var(--accent);
+      }
+      .hours-card.accent .hours-card-label {
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .hours-card.accent .hours-card-time {
+        color: #fff;
+      }
+      .hours-card.accent .hours-card-sub {
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .hours-card.accent a {
+        color: #fff;
+      }
+
+      /* ─── CTA ───────────────────────────────────────────── */
+      .cta {
+        padding: var(--section) 0;
+        background: var(--surface);
+        text-align: center;
+      }
+      .cta .section-tag {
+        color: var(--accent);
+        justify-content: center;
+      }
+      .cta .section-tag::before {
+        background: var(--accent);
+      }
+      .cta .section-heading {
+        color: var(--black);
+        margin-top: 16px;
+      }
+      .cta-sub {
+        font-size: 16px;
+        font-weight: 400;
+        color: var(--gray);
+        line-height: 1.9;
+        margin: 20px auto 40px;
+        max-width: 520px;
+      }
+      .cta-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .cta-tel {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 22px;
+        border: 1px solid var(--border);
+        background: var(--off-white);
+        color: var(--black);
+        transition:
+          border-color 0.25s,
+          transform 0.3s var(--ease-spring),
+          box-shadow 0.3s;
+      }
+      .cta-tel:hover {
+        border-color: var(--accent);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 66, 157, 0.1);
+      }
+      .cta-tel-label {
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        display: block;
+        color: var(--gray-light);
+        margin-bottom: 2px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+      .cta-tel-num {
+        font-family: var(--font-min);
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--black);
+      }
+
+      /* ─── FOOTER ────────────────────────────────────────── */
+      .footer {
+        background: #0e0e12;
+        padding: 80px 0 0;
+      }
+      .footer-inner {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 48px;
+        margin-bottom: 48px;
+      }
+      .footer-logo {
+        margin-bottom: 18px;
+      }
+      .footer-logo img {
+        height: 32px;
+        width: auto;
+      }
+      .footer-desc {
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.45);
+        line-height: 1.9;
+      }
+      .footer-col-title {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 18px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .footer-links a {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.45);
+        transition:
+          color 0.2s,
+          padding-left 0.3s var(--ease);
+      }
+      .footer-links a:hover {
+        color: rgba(255, 255, 255, 0.85);
+        padding-left: 8px;
+      }
+      .footer-contact-info {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.42);
+        line-height: 1.95;
+        font-weight: 400;
+      }
+      .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+        padding: 20px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .footer-copy {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.28);
+        letter-spacing: 0.04em;
+      }
+      .footer-legal {
+        display: flex;
+        gap: 20px;
+      }
+      .footer-legal a {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.28);
+        transition: color 0.2s;
+      }
+      .footer-legal a:hover {
+        color: var(--accent-light);
+      }
+
+      /* ─── RESPONSIVE ────────────────────────────────────── */
+      @media (max-width: 1024px) {
+        .about-grid {
+          grid-template-columns: 1fr;
+        }
+        .about-img-wrap {
+          max-width: 460px;
+        }
+        .services-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .vehicles-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .area-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .company-grid {
+          grid-template-columns: 1fr;
+        }
+        .news-inner {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .news-sticky {
+          position: static;
+        }
+        .footer-inner {
+          grid-template-columns: 1fr 1fr;
+        }
+        .works-grid {
+          grid-template-columns: repeat(6, 1fr);
+        }
+        .work-item:nth-child(1) {
+          grid-column: span 6;
+        }
+        .work-item:nth-child(2),
+        .work-item:nth-child(3) {
+          grid-column: span 3;
+        }
+        .work-item:nth-child(4),
+        .work-item:nth-child(5) {
+          grid-column: span 3;
+        }
+      }
+      @media (max-width: 768px) {
+        .nav-links,
+        .nav-cta {
+          display: none;
+        }
+        .nav-hamburger {
+          display: flex;
+        }
+        .services-grid {
+          grid-template-columns: 1fr;
+        }
+        .vehicles-grid {
+          grid-template-columns: 1fr;
+        }
+        .works-grid {
+          grid-template-columns: 1fr;
+        }
+        .work-item {
+          grid-column: span 1 !important;
+        }
+        .work-item:nth-child(1) .work-ph {
+          min-height: 280px;
+        }
+        .footer-inner {
+          grid-template-columns: 1fr;
+          gap: 36px;
+        }
+        .hours-inner {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .about-badge {
+          display: none;
+        }
+        .about-img-accent {
+          display: none;
+        }
+        .hero-stats {
+          gap: 24px;
+        }
+      }
+      @media (max-width: 480px) {
+        .hero-actions {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .cta-actions {
+          flex-direction: column;
+        }
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+        .footer-legal {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- NAV -->
+    <nav class="nav light" id="nav">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo" style="position: relative">
+          <!-- White version for dark/hero background -->
+          <img
+            class="logo-hero"
+            src="logo02_white.png"
+            alt="株式会社上智"
+            style="height: 36px; width: auto"
+          />
+          <!-- Dark version for scrolled/light background -->
+          <img
+            class="logo-light"
+            src="logo02.png"
+            alt="株式会社上智"
+            style="height: 36px; width: auto"
+          />
+        </a>
+        <ul class="nav-links">
+          <li><a href="#about">会社紹介</a></li>
+          <li><a href="#services">事業内容</a></li>
+          <li><a href="#vehicles">保有車両</a></li>
+          <li><a href="#area">事業エリア</a></li>
+          <li><a href="#works">施工実績</a></li>
+          <li><a href="#company">会社概要</a></li>
+          <li><a href="#contact">お問い合わせ</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a href="#contact"
+            >お問い合わせ
+            <svg
+              width="13"
+              height="13"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+        <button class="nav-hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about" class="mobile-link">会社紹介</a>
+      <a href="#services" class="mobile-link">事業内容</a>
+      <a href="#vehicles" class="mobile-link">保有車両</a>
+      <a href="#area" class="mobile-link">事業エリア</a>
+      <a href="#works" class="mobile-link">施工実績</a>
+      <a href="#company" class="mobile-link">会社概要</a>
+      <a href="#contact" class="mobile-link">お問い合わせ</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="hero-img-placeholder">
+        <img
+          src="hero.png"
+          alt="株式会社上智 現場写真"
+          style="width: 100%; height: 100%; object-fit: cover; display: block"
+        />
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          石川県羽咋市 &nbsp;·&nbsp; 地域に根ざした総合企業
+        </div>
+        <h1 class="hero-title">
+          <span class="line"><span>地域を</span></span>
+          <span class="line"><span class="hero-accent">支える</span></span>
+          <span class="line"><span>力</span></span>
+        </h1>
+        <p class="hero-copy">
+          運送業・収集運搬・解体工事・土木工事・舗装工事・農業。<br />石川県羽咋市を拠点に、地域のあらゆるニーズにお応えします。
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-solid"
+            >無料相談・お問い合わせ
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg></a>
+          <a href="#works" class="btn-ghost"
+            >施工実績を見る
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" /></svg></a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num">6<em>業種</em></div>
+            <div class="stat-label">対応事業数</div>
+          </div>
+          <div>
+            <div class="stat-num">16<em>台</em></div>
+            <div class="stat-label">保有車両</div>
+          </div>
+          <div>
+            <div class="stat-num">365<em>日</em></div>
+            <div class="stat-label">地域を支え続ける</div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <div class="scroll-line"></div>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div data-reveal="left">
+            <div class="about-img-wrap">
+              <div class="about-badge">
+                <span class="about-badge-num">6</span
+                ><span class="about-badge-text">BUSINESS</span>
+              </div>
+              <div
+                class="about-img-main"
+                style="
+                  aspect-ratio: 4/5;
+                  overflow: hidden;
+                  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <img
+                  src="about_main.png"
+                  alt="現場作業員"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                  "
+                />
+              </div>
+              <div
+                class="about-img-accent"
+                style="
+                  position: absolute;
+                  bottom: -28px;
+                  right: -28px;
+                  width: 50%;
+                  aspect-ratio: 1;
+                  border: 6px solid var(--off-white);
+                  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+                  z-index: 2;
+                  overflow: hidden;
+                "
+              >
+                <img
+                  src="about_sub.png"
+                  alt="作業の様子"
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                  "
+                />
+              </div>
+            </div>
+          </div>
+          <div data-reveal="right">
+            <div class="section-tag">Company Overview</div>
+            <h2 class="section-heading">
+              誠実な仕事、<br /><em>地域への貢献</em>
+            </h2>
+            <p class="about-concept">
+              運ぶ力、壊す力、作る力、<br />育てる力で地域を支える。
+            </p>
+            <p class="about-desc">
+              株式会社上智は、石川県羽咋市を拠点に、運送業・収集運搬業・解体工事業・土木工事業・舗装工事業・農業の6つの事業を展開しています。地域の皆様の暮らしと産業を多角的にサポートし、信頼と実績を積み重ねてまいりました。
+            </p>
+            <div class="strengths">
+              <div class="strength-item" data-reveal="up" data-delay="1">
+                <div class="strength-dot"></div>
+                <div>
+                  <div class="strength-title">
+                    Safety First — 安全第一の現場管理
+                  </div>
+                  <div class="strength-desc">
+                    解体・土木・舗装など危険を伴う作業でも、徹底した安全管理体制のもと、無事故・無災害を追求しています。
+                  </div>
+                </div>
+              </div>
+              <div class="strength-item" data-reveal="up" data-delay="2">
+                <div class="strength-dot"></div>
+                <div>
+                  <div class="strength-title">
+                    Multi Business — 6業種対応のワンストップ
+                  </div>
+                  <div class="strength-desc">
+                    運送から農業まで、多彩な事業を自社で完結。複数の課題を一括でご相談いただけます。
+                  </div>
+                </div>
+              </div>
+              <div class="strength-item" data-reveal="up" data-delay="3">
+                <div class="strength-dot"></div>
+                <div>
+                  <div class="strength-title">
+                    Local Trust — 羽咋市・地域密着
+                  </div>
+                  <div class="strength-desc">
+                    石川県羽咋市を中心に、地域の皆様と長年にわたって信頼関係を築いてきた地元の企業です。
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services" id="services">
+      <div class="container">
+        <div class="services-head">
+          <div>
+            <div class="section-tag" data-reveal="up">Our Services</div>
+            <h2 class="section-heading" data-reveal="up" data-delay="1">
+              幅広い<em>事業領域</em>
+            </h2>
+          </div>
+          <p class="section-sub" data-reveal="up" data-delay="2">
+            6つの事業を自社で展開し、地域のあらゆるニーズにワンストップでお応えします。
+          </p>
+        </div>
+        <div class="services-grid">
+          <div class="service-card" data-reveal="up" data-delay="1">
+            <span class="service-num">— 01</span>
+            <h3 class="service-title">運送業</h3>
+            <p class="service-desc">
+              石川県内を中心に、各種貨物の輸送を承ります。迅速・丁寧な配送で、お客様の大切な荷物を確実にお届けします。
+            </p>
+            <div class="service-tags">
+              <span class="service-tag">一般貨物</span
+              ><span class="service-tag">地域配送</span
+              ><span class="service-tag">石川県内</span>
+            </div>
+          </div>
+          <div class="service-card" data-reveal="up" data-delay="2">
+            <span class="service-num">— 02</span>
+            <h3 class="service-title">収集運搬業</h3>
+            <p class="service-desc">
+              産業廃棄物・一般廃棄物の収集・運搬を許可を得て適切に行います。環境に配慮した廃棄物処理で地域の清潔を守ります。
+            </p>
+            <div class="service-tags">
+              <span class="service-tag">産業廃棄物</span
+              ><span class="service-tag">一般廃棄物</span
+              ><span class="service-tag">適正処理</span>
+            </div>
+          </div>
+          <div class="service-card" data-reveal="up" data-delay="3">
+            <span class="service-num">— 03</span>
+            <h3 class="service-title">解体工事業</h3>
+            <p class="service-desc">
+              建物・構造物の解体工事を安全かつ迅速に行います。アスベスト対応・分別解体・廃材処理まで一括してお任せください。
+            </p>
+            <div class="service-tags">
+              <span class="service-tag">建物解体</span
+              ><span class="service-tag">内装解体</span
+              ><span class="service-tag">アスベスト対応</span>
+            </div>
+          </div>
+          <div class="service-card" data-reveal="up" data-delay="1">
+            <span class="service-num">— 04</span>
+            <h3 class="service-title">土木工事業</h3>
+            <p class="service-desc">
+              造成工事・擁壁工事・排水工事・基礎工事など、各種土木工事に対応。地域インフラの整備と維持に貢献します。
+            </p>
+            <div class="service-tags">
+              <span class="service-tag">造成工事</span
+              ><span class="service-tag">擁壁工事</span
+              ><span class="service-tag">排水工事</span>
+            </div>
+          </div>
+          <div class="service-card" data-reveal="up" data-delay="2">
+            <span class="service-num">— 05</span>
+            <h3 class="service-title">舗装工事業</h3>
+            <p class="service-desc">
+              アスファルト舗装・コンクリート舗装・駐車場整備など。道路から私有地まで、耐久性の高い舗装工事を提供します。
+            </p>
+            <div class="service-tags">
+              <span class="service-tag">アスファルト</span
+              ><span class="service-tag">コンクリート</span
+              ><span class="service-tag">駐車場整備</span>
+            </div>
+          </div>
+          <div class="service-card" data-reveal="up" data-delay="3">
+            <span class="service-num">— 06</span>
+            <h3 class="service-title">農業</h3>
+            <p class="service-desc">
+              石川県の豊かな自然を活かした農業を営んでいます。地域の食と農を守り、持続可能な農業経営に取り組んでいます。
+            </p>
+            <div class="service-tags">
+              <span class="service-tag">農産物生産</span
+              ><span class="service-tag">地域農業</span
+              ><span class="service-tag">石川県産</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKS -->
+    <section class="works" id="works">
+      <div class="container">
+        <div class="works-head">
+          <div class="section-tag" data-reveal="up">Portfolio</div>
+          <h2 class="section-heading" data-reveal="up" data-delay="1">
+            施工<em>実績</em>
+          </h2>
+        </div>
+        <div class="works-grid">
+          <div class="work-item" data-reveal="up" data-delay="1">
+            <div
+              class="work-img-wrap"
+              style="overflow: hidden; min-height: 400px"
+            >
+              <img
+                src="works_01.png"
+                alt="解体工事"
+                style="
+                  width: 100%;
+                  height: 100%;
+                  min-height: 400px;
+                  object-fit: cover;
+                  display: block;
+                  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+                "
+              />
+            </div>
+            <div class="work-info">
+              <div>
+                <div class="work-cat">Demolition</div>
+                <div class="work-name">羽咋市 解体工事</div>
+              </div>
+              <div class="work-arrow">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="work-item" data-reveal="up" data-delay="2">
+            <div
+              class="work-img-wrap"
+              style="overflow: hidden; min-height: 190px"
+            >
+              <img
+                src="works_02.png"
+                alt="土木工事"
+                style="
+                  width: 100%;
+                  height: 100%;
+                  min-height: 190px;
+                  object-fit: cover;
+                  display: block;
+                  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+                "
+              />
+            </div>
+            <div class="work-info">
+              <div>
+                <div class="work-cat">Civil Engineering</div>
+                <div class="work-name">七尾市 土木工事</div>
+              </div>
+              <div class="work-arrow">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="work-item" data-reveal="up" data-delay="1">
+            <div
+              class="work-img-wrap"
+              style="overflow: hidden; min-height: 190px"
+            >
+              <img
+                src="works_03.png"
+                alt="舗装工事"
+                style="
+                  width: 100%;
+                  height: 100%;
+                  min-height: 190px;
+                  object-fit: cover;
+                  display: block;
+                  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+                "
+              />
+            </div>
+            <div class="work-info">
+              <div>
+                <div class="work-cat">Paving</div>
+                <div class="work-name">金沢市 舗装工事</div>
+              </div>
+              <div class="work-arrow">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="work-item" data-reveal="up" data-delay="2">
+            <div
+              class="work-img-wrap"
+              style="overflow: hidden; min-height: 190px"
+            >
+              <img
+                src="works_04.png"
+                alt="運送実績"
+                style="
+                  width: 100%;
+                  height: 100%;
+                  min-height: 190px;
+                  object-fit: cover;
+                  display: block;
+                  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+                "
+              />
+            </div>
+            <div class="work-info">
+              <div>
+                <div class="work-cat">Transport</div>
+                <div class="work-name">石川県内 運送実績</div>
+              </div>
+              <div class="work-arrow">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="work-item" data-reveal="up" data-delay="3">
+            <div
+              class="work-img-wrap"
+              style="overflow: hidden; min-height: 190px"
+            >
+              <img
+                src="works_05.png"
+                alt="農業事業"
+                style="
+                  width: 100%;
+                  height: 100%;
+                  min-height: 190px;
+                  object-fit: cover;
+                  display: block;
+                  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+                "
+              />
+            </div>
+            <div class="work-info">
+              <div>
+                <div class="work-cat">Agriculture</div>
+                <div class="work-name">羽咋市 農業事業</div>
+              </div>
+              <div class="work-arrow">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VEHICLES -->
+    <section class="vehicles" id="vehicles">
+      <div class="container">
+        <div class="vehicles-head">
+          <div class="section-tag" data-reveal="up">Our Fleet</div>
+          <h2 class="section-heading" data-reveal="up" data-delay="1">
+            保有<em>車両</em>
+          </h2>
+        </div>
+        <div class="vehicles-grid">
+          <div class="vehicle-card" data-reveal="up" data-delay="1">
+            <div class="vehicle-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+              >
+                <path d="M1 3h15v13H1zM16 8h4l3 5v5h-7V8z" />
+                <circle cx="5.5" cy="18.5" r="2.5" />
+                <circle cx="18.5" cy="18.5" r="2.5" />
+              </svg>
+            </div>
+            <div>
+              <div class="vehicle-name">10t ダンプ</div>
+              <div>
+                <span class="vehicle-count-num" data-count="6">6</span
+                ><span class="vehicle-count-unit">台</span>
+              </div>
+            </div>
+          </div>
+          <div class="vehicle-card" data-reveal="up" data-delay="2">
+            <div class="vehicle-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+              >
+                <rect x="1" y="3" width="15" height="13" rx="1" />
+                <path d="M16 8h4l3 5v5h-7V8z" />
+                <circle cx="5.5" cy="18.5" r="2.5" />
+                <circle cx="18.5" cy="18.5" r="2.5" />
+              </svg>
+            </div>
+            <div>
+              <div class="vehicle-name">10t アームロール</div>
+              <div>
+                <span class="vehicle-count-num" data-count="3">3</span
+                ><span class="vehicle-count-unit">台</span>
+              </div>
+            </div>
+          </div>
+          <div class="vehicle-card" data-reveal="up" data-delay="3">
+            <div class="vehicle-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+              >
+                <path d="M1 3h15v13H1zM16 8h4l3 5v5h-7V8z" />
+                <circle cx="5.5" cy="18.5" r="2.5" />
+                <circle cx="18.5" cy="18.5" r="2.5" />
+              </svg>
+            </div>
+            <div>
+              <div class="vehicle-name">10t 重機回送車</div>
+              <div>
+                <span class="vehicle-count-num" data-count="2">2</span
+                ><span class="vehicle-count-unit">台</span>
+              </div>
+            </div>
+          </div>
+          <div class="vehicle-card" data-reveal="up" data-delay="1">
+            <div class="vehicle-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+              >
+                <path d="M1 3h15v13H1zM16 8h4l3 5v5h-7V8z" />
+                <circle cx="5.5" cy="18.5" r="2.5" />
+                <circle cx="18.5" cy="18.5" r="2.5" />
+              </svg>
+            </div>
+            <div>
+              <div class="vehicle-name">10t ユニック</div>
+              <div>
+                <span class="vehicle-count-num" data-count="2">2</span
+                ><span class="vehicle-count-unit">台</span>
+              </div>
+            </div>
+          </div>
+          <div class="vehicle-card" data-reveal="up" data-delay="2">
+            <div class="vehicle-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+              >
+                <rect x="1" y="5" width="18" height="11" rx="1" />
+                <circle cx="5" cy="18" r="2" />
+                <circle cx="16" cy="18" r="2" />
+              </svg>
+            </div>
+            <div>
+              <div class="vehicle-name">10t 平</div>
+              <div>
+                <span class="vehicle-count-num" data-count="1">1</span
+                ><span class="vehicle-count-unit">台</span>
+              </div>
+            </div>
+          </div>
+          <div class="vehicle-card" data-reveal="up" data-delay="3">
+            <div class="vehicle-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+              >
+                <rect x="1" y="4" width="9" height="12" rx="1" />
+                <rect x="10" y="6" width="13" height="10" rx="1" />
+                <circle cx="4" cy="18" r="2" />
+                <circle cx="14" cy="18" r="2" />
+                <circle cx="20" cy="18" r="2" />
+              </svg>
+            </div>
+            <div>
+              <div class="vehicle-name">トレーラーダンプ</div>
+              <div>
+                <span class="vehicle-count-num" data-count="2">2</span
+                ><span class="vehicle-count-unit">台</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="vehicles-total" data-reveal="scale" data-delay="2">
+          <div>
+            <div class="vehicles-total-label">TOTAL FLEET</div>
+            <div class="vehicles-total-sub">
+              各種工事・運搬に対応した車両を保有しています
+            </div>
+          </div>
+          <div class="vehicles-total-num">
+            <span class="counter" data-count="16">16</span
+            ><span class="vehicles-total-unit"> 台</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AREA -->
+    <section class="area" id="area">
+      <div class="container">
+        <div class="area-grid">
+          <div data-reveal="left">
+            <div class="area-list-block">
+              <div class="area-list-title">MAIN AREA — 石川県内主要エリア</div>
+              <div class="area-prefs">
+                <span class="area-pref highlight">羽咋市 ★本社</span>
+                <span class="area-pref highlight">金沢市</span>
+                <span class="area-pref highlight">七尾市</span>
+                <span class="area-pref highlight">輪島市</span>
+                <span class="area-pref highlight">珠洲市</span>
+                <span class="area-pref highlight">能登町</span>
+                <span class="area-pref highlight">志賀町</span>
+                <span class="area-pref highlight">中能登町</span>
+                <span class="area-pref highlight">穴水町</span>
+                <span class="area-pref">白山市</span>
+                <span class="area-pref">小松市</span>
+                <span class="area-pref">加賀市</span>
+                <span class="area-pref">かほく市</span>
+              </div>
+              <div
+                style="
+                  margin-top: 24px;
+                  padding-top: 24px;
+                  border-top: 1px solid var(--border);
+                "
+              >
+                <div class="area-list-title" style="margin-bottom: 14px">
+                  WIDE AREA — 広域対応（運送・収集運搬）
+                </div>
+                <div class="area-prefs">
+                  <span class="area-pref">富山県</span>
+                  <span class="area-pref">福井県</span>
+                  <span class="area-pref">新潟県</span>
+                  <span class="area-pref">その他ご相談</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div data-reveal="right">
+            <div class="section-tag">Service Area</div>
+            <h2 class="section-heading">事業<em>エリア</em></h2>
+            <p class="area-description">
+              石川県羽咋市を拠点に、石川県全域および近隣県への対応が可能です。土木・舗装・解体工事は石川県内を中心に、運送・収集運搬業務は広域にわたって承ります。
+            </p>
+            <div class="area-note">
+              エリア外のご依頼もまずはお気軽にご相談ください。内容により対応可能な場合がございます。
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPANY -->
+    <section class="company" id="company">
+      <div class="container">
+        <div style="margin-bottom: 48px">
+          <div class="section-tag" data-reveal="up">Company Profile</div>
+          <h2 class="section-heading" data-reveal="up" data-delay="1">
+            会社<em>概要</em>
+          </h2>
+        </div>
+        <div class="company-grid">
+          <div data-reveal="left">
+            <table class="company-table">
+              <tr>
+                <th>Company</th>
+                <td><strong>株式会社　上智</strong></td>
+              </tr>
+              <tr>
+                <th>所在地</th>
+                <td>〒925-0046<br />石川県羽咋市兵庫町申10−８</td>
+              </tr>
+              <tr>
+                <th>電話番号</th>
+                <td><a href="tel:0767235205">0767-23-5205</a></td>
+              </tr>
+              <tr>
+                <th>営業時間</th>
+                <td>
+                  月〜金・木曜日　8:00〜17:00<br />
+                  <span style="color: var(--gray-light); font-size: 13px"
+                    >土曜日・日曜日　定休</span
+                  ><br />
+                  <span style="color: var(--gray-light); font-size: 12px"
+                    >※時間変更の可能性あり</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <th>事業内容</th>
+                <td>
+                  運送業／収集運搬業<br />解体工事業／土木工事業<br />舗装工事業／農業
+                </td>
+              </tr>
+              <tr>
+                <th>保有車両</th>
+                <td>
+                  10tダンプ×6、10tアームロール×3<br />
+                  10t重機回送車×2、10tユニック×2<br />
+                  10t平×1、トレーラーダンプ×2<br />
+                  <span class="accent">計16台</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div data-reveal="right">
+            <div class="company-map-card">
+              <div class="company-map-header">
+                <div class="map-dot"></div>
+                <span>ACCESS MAP — 石川県羽咋市</span>
+              </div>
+              <div class="company-map-body">
+                <div class="company-map-address">
+                  <strong>株式会社　上智（本社）</strong>
+                  〒925-0046 石川県羽咋市兵庫町申10−８<br />
+                  TEL：0767-23-5205<br />
+                  営業時間：月〜金・木 8:00〜17:00（土日定休）
+                </div>
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1633974.5576769663!2d134.46990966796875!3d36.88181755936464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5ff769a5d25ee1f7%3A0x2376dfe19193158a!2z5qCq5byP5Lya56S-IOS4iuaZug!5e0!3m2!1sja!2sjp!4v1773903180868!5m2!1sja!2sjp"
+                  width="600"
+                  height="450"
+                  style="border: 0"
+                  allowfullscreen=""
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+                <a
+                  href="https://maps.google.com/?q=石川県羽咋市兵庫町申10-8"
+                  target="_blank"
+                  class="company-map-link"
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"
+                    />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                  Google マップで開く
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWS -->
+    <section class="news" id="news">
+      <div class="container">
+        <div class="news-inner">
+          <div class="news-sticky">
+            <div class="section-tag" data-reveal="up">Latest News</div>
+            <h2 class="section-heading" data-reveal="up" data-delay="1">
+              お知<em>らせ</em>
+            </h2>
+            <p
+              class="section-sub"
+              data-reveal="up"
+              data-delay="2"
+              style="margin-top: 14px"
+            >
+              最新の施工情報・採用情報をお届けします。
+            </p>
+            <a href="#" class="news-btn-all" data-reveal="up" data-delay="3">
+              すべて見る
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+          <div class="news-list">
+            <a href="#" class="news-item" data-reveal="up"
+              ><div class="news-date">2025.06.15</div>
+              <div>
+                <span class="news-tag work">施工情報</span>
+                <div class="news-title">羽咋市内 解体工事が竣工しました</div>
+              </div></a
+            >
+            <a href="#" class="news-item" data-reveal="up" data-delay="1"
+              ><div class="news-date">2025.05.30</div>
+              <div>
+                <span class="news-tag info">お知らせ</span>
+                <div class="news-title">
+                  2025年度 採用の応募受付を開始しました
+                </div>
+              </div></a
+            >
+            <a href="#" class="news-item" data-reveal="up" data-delay="2"
+              ><div class="news-date">2025.05.12</div>
+              <div>
+                <span class="news-tag event">イベント</span>
+                <div class="news-title">
+                  無料相談会を開催します（6月14日・15日）
+                </div>
+              </div></a
+            >
+            <a href="#" class="news-item" data-reveal="up" data-delay="3"
+              ><div class="news-date">2025.04.20</div>
+              <div>
+                <span class="news-tag info">お知らせ</span>
+                <div class="news-title">舗装工事業の新設備を導入しました</div>
+              </div></a
+            >
+            <a href="#" class="news-item" data-reveal="up" data-delay="4"
+              ><div class="news-date">2025.03.08</div>
+              <div>
+                <span class="news-tag work">施工情報</span>
+                <div class="news-title">七尾市・土木工事が着工しました</div>
+              </div></a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOURS -->
+    <div class="hours">
+      <div class="container">
+        <div class="hours-inner">
+          <div data-reveal="up">
+            <div class="section-tag" style="margin-bottom: 8px">
+              Business Hours
+            </div>
+            <div class="hours-heading">営業時間のご案内</div>
+          </div>
+          <div class="hours-cards" data-reveal="up" data-delay="2">
+            <div class="hours-card">
+              <div class="hours-card-label">MON – FRI / THU</div>
+              <div class="hours-card-time">08:00 – 17:00</div>
+              <div class="hours-card-sub">月・火・水・木・金曜日</div>
+            </div>
+            <div class="hours-card closed">
+              <div class="hours-card-label">SAT</div>
+              <div class="hours-card-time">定休日</div>
+              <div class="hours-card-sub">土曜日</div>
+            </div>
+            <div class="hours-card closed">
+              <div class="hours-card-label">SUN</div>
+              <div class="hours-card-time">定休日</div>
+              <div class="hours-card-sub">日曜日</div>
+            </div>
+            <div class="hours-card accent">
+              <div class="hours-card-label">PHONE</div>
+              <div class="hours-card-time">
+                <a href="tel:0767235205">0767-23-5205</a>
+              </div>
+              <div class="hours-card-sub">※時間変更の可能性あり</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <section class="cta" id="contact">
+      <div class="container">
+        <div class="section-tag" data-reveal="up">Contact Us</div>
+        <h2 class="section-heading" data-reveal="up" data-delay="1">
+          お気軽に<br /><em>ご相談</em>ください
+        </h2>
+        <p class="cta-sub" data-reveal="up" data-delay="2">
+          運送・解体・土木・舗装・農業など、どのようなご用件もまずはお電話またはメールにてお問い合わせください。担当者が丁寧にご対応いたします。
+        </p>
+        <div class="cta-actions" data-reveal="up" data-delay="3">
+          <a href="mailto:info@jochi.co.jp" class="btn-solid"
+            >メールでお問い合わせ
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" /></svg></a>
+          <a href="tel:0767-23-5205" class="cta-tel">
+            <div>
+              <span class="cta-tel-label">お電話はこちら</span>
+              <div class="cta-tel-num">0767-23-5205</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-inner">
+          <div>
+            <div class="footer-logo">
+              <img
+                src="logo02_white.png"
+                alt="株式会社上智"
+                style="height: 30px; width: auto"
+              />
+            </div>
+            <p class="footer-desc">
+              石川県羽咋市を拠点に、運送・収集運搬・解体工事・土木工事・舗装工事・農業の6事業を展開。地域の皆様の暮らしと産業を支えています。
+            </p>
+          </div>
+          <div>
+            <div class="footer-col-title">Services</div>
+            <ul class="footer-links">
+              <li><a href="#services">運送業</a></li>
+              <li><a href="#services">収集運搬業</a></li>
+              <li><a href="#services">解体工事業</a></li>
+              <li><a href="#services">土木工事業</a></li>
+              <li><a href="#services">舗装工事業</a></li>
+              <li><a href="#services">農業</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="footer-col-title">Company</div>
+            <ul class="footer-links">
+              <li><a href="#about">会社紹介</a></li>
+              <li><a href="#vehicles">保有車両</a></li>
+              <li><a href="#area">事業エリア</a></li>
+              <li><a href="#works">施工実績</a></li>
+              <li><a href="#company">会社概要</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="footer-col-title">Contact</div>
+            <div class="footer-contact-info">
+              〒925-0046<br />石川県羽咋市兵庫町申10−８<br /><br />
+              月〜金・木 8:00〜17:00<br />土日定休<br /><br />
+              <a
+                href="tel:0767235205"
+                style="color: rgba(255, 255, 255, 0.5); font-weight: 500"
+                >0767-23-5205</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="footer-copy">© 2025 株式会社上智 All rights reserved.</p>
+          <div class="footer-legal">
+            <a href="#">プライバシーポリシー</a><a href="#">サイトマップ</a
+            ><a href="#">免責事項</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      /* ── PROGRESS BAR ──────────────────────────── */
+      const progressBar = document.getElementById("progressBar");
+      window.addEventListener(
+        "scroll",
+        () => {
+          const pct =
+            (window.scrollY /
+              (document.body.scrollHeight - window.innerHeight)) *
+            100;
+          progressBar.style.width = pct + "%";
+        },
+        { passive: true },
+      );
+
+      /* ── NAV ───────────────────────────────────── */
+      const nav = document.getElementById("nav");
+      function updateNav() {
+        const s = window.scrollY > 60;
+        nav.classList.toggle("scrolled", s);
+        nav.classList.toggle("light", !s);
+      }
+      updateNav();
+      window.addEventListener("scroll", updateNav, { passive: true });
+
+      const hamburger = document.getElementById("hamburger");
+      const mobileMenu = document.getElementById("mobileMenu");
+      hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("open");
+        mobileMenu.classList.toggle("open");
+        document.body.style.overflow = mobileMenu.classList.contains("open")
+          ? "hidden"
+          : "";
+      });
+      document.querySelectorAll(".mobile-link").forEach((l) =>
+        l.addEventListener("click", () => {
+          hamburger.classList.remove("open");
+          mobileMenu.classList.remove("open");
+          document.body.style.overflow = "";
+        }),
+      );
+
+      /* ── SCROLL REVEAL ─────────────────────────── */
+      const revealObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              revealObs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+      );
+      document
+        .querySelectorAll("[data-reveal]")
+        .forEach((el) => revealObs.observe(el));
+
+      /* ── COUNTER ANIMATION ─────────────────────── */
+      function animateCounter(el, target, duration = 1100) {
+        let start = null;
+        const step = (ts) => {
+          if (!start) start = ts;
+          const prog = Math.min((ts - start) / duration, 1);
+          const ease = 1 - Math.pow(1 - prog, 3);
+          el.textContent = Math.floor(ease * target);
+          if (prog < 1) requestAnimationFrame(step);
+          else el.textContent = target;
+        };
+        requestAnimationFrame(step);
+      }
+      const counterObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              const t = parseInt(e.target.dataset.count);
+              if (!isNaN(t)) animateCounter(e.target, t);
+              counterObs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.5 },
+      );
+      document
+        .querySelectorAll("[data-count]")
+        .forEach((el) => counterObs.observe(el));
+
+      /* ── SMOOTH SCROLL ─────────────────────────── */
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const t = document.querySelector(a.getAttribute("href"));
+          if (t) {
+            e.preventDefault();
+            window.scrollTo({
+              top: t.getBoundingClientRect().top + window.pageYOffset - 68,
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+
+      /* ── HERO PARALLAX ─────────────────────────── */
+      const heroBg = document.querySelector(".hero-img-placeholder");
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (heroBg && window.scrollY < window.innerHeight) {
+            heroBg.style.transform = `translateY(${window.scrollY * 0.28}px)`;
+          }
+        },
+        { passive: true },
+      );
+
+      /* ── MAGNETIC BUTTONS ──────────────────────── */
+      document.querySelectorAll(".btn-solid, .btn-ghost").forEach((btn) => {
+        btn.addEventListener("mousemove", (e) => {
+          const r = btn.getBoundingClientRect();
+          const dx = e.clientX - (r.left + r.width / 2);
+          const dy = e.clientY - (r.top + r.height / 2);
+          btn.style.transform = `translate(${dx * 0.14}px, ${dy * 0.24}px) translateY(-3px)`;
+        });
+        btn.addEventListener("mouseleave", () => {
+          btn.style.transform = "";
+        });
+      });
+
+      /* ── STAGGER GRID CHILDREN ─────────────────── */
+      document
+        .querySelectorAll(".services-grid, .vehicles-grid")
+        .forEach((grid) => {
+          const go = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((e) => {
+                if (e.isIntersecting) {
+                  [...e.target.children].forEach((child, i) => {
+                    child.style.transitionDelay = `${i * 0.07}s`;
+                  });
+                  go.unobserve(e.target);
+                }
+              });
+            },
+            { threshold: 0.1 },
+          );
+          go.observe(grid);
+        });
+    </script>
+  </body>
+</html>
