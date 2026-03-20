@@ -1600,6 +1600,208 @@
         color: var(--accent-light);
       }
 
+      /* ─── CM SECTION ────────────────────────────────────── */
+      .cm-section {
+        background: var(--black);
+        padding: var(--section) 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .cm-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at 30% 50%,
+          rgba(190, 0, 22, 0.06) 0%,
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+      .cm-inner {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        padding: 0 var(--pad);
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: clamp(40px, 6vw, 80px);
+        align-items: center;
+      }
+      .cm-title {
+        font-family: var(--font-min);
+        font-size: clamp(24px, 3vw, 40px);
+        font-weight: 700;
+        line-height: 1.4;
+        color: #fff;
+        margin-top: 16px;
+      }
+      .cm-title em {
+        color: var(--accent);
+        font-style: normal;
+      }
+
+      /* Player */
+      .cm-player-wrap {
+        width: 100%;
+      }
+      .cm-player {
+        position: relative;
+        background: #000;
+        aspect-ratio: 16/9;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .cm-video {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+      }
+      /* Play button */
+      .cm-play-btn {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        background: rgba(0, 0, 0, 0.35);
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .cm-play-btn:hover {
+        background: rgba(0, 0, 0, 0.2);
+      }
+      .cm-play-icon {
+        width: 72px;
+        height: 72px;
+        background: var(--accent);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          transform 0.35s var(--ease-spring),
+          background 0.25s;
+      }
+      .cm-play-btn:hover .cm-play-icon {
+        transform: scale(1.1);
+        background: var(--accent-dark);
+      }
+      .cm-play-icon svg {
+        width: 28px;
+        height: 28px;
+        color: #fff;
+        margin-left: 4px;
+      }
+      .cm-play-label {
+        font-family: var(--font-sans);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.28em;
+        color: rgba(255, 255, 255, 0.75);
+        text-transform: uppercase;
+      }
+      .cm-play-btn.hidden {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+
+      /* Controls */
+      .cm-controls {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 32px 16px 12px;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.75) 0%,
+          transparent 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .cm-player:hover .cm-controls,
+      .cm-player.playing .cm-controls {
+        opacity: 1;
+      }
+      .cm-progress {
+        width: 100%;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.25);
+        cursor: pointer;
+        margin-bottom: 10px;
+        position: relative;
+      }
+      .cm-progress-fill {
+        height: 100%;
+        width: 0%;
+        background: var(--accent);
+        transition: width 0.1s linear;
+        pointer-events: none;
+      }
+      .cm-ctrl-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .cm-ctrl-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        transition: color 0.2s;
+      }
+      .cm-ctrl-btn:hover {
+        color: #fff;
+      }
+      .cm-ctrl-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+      .cm-mute-btn {
+        margin-left: auto;
+      }
+      .cm-full-btn {
+        margin-left: 4px;
+      }
+      .cm-time {
+        font-family: var(--font-sans);
+        font-size: 11px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.7);
+        letter-spacing: 0.06em;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .cm-inner {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+        .cm-label-wrap {
+          text-align: center;
+        }
+        .cm-label-wrap .section-tag {
+          justify-content: center;
+        }
+        .cm-play-icon {
+          width: 60px;
+          height: 60px;
+        }
+        .cm-play-icon svg {
+          width: 22px;
+          height: 22px;
+        }
+      }
+
       /* ═══════════════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════════════ */
@@ -2049,15 +2251,15 @@
         </div>
         <div class="hero-stats">
           <div>
-            <div class="stat-num">6業種</div>
+            <div class="stat-num">6<em>業種</em></div>
             <div class="stat-label">対応事業数</div>
           </div>
           <div>
-            <div class="stat-num">16台</div>
+            <div class="stat-num">16<em>台</em></div>
             <div class="stat-label">保有車両</div>
           </div>
           <div>
-            <div class="stat-num">365日</div>
+            <div class="stat-num">365<em>日</em></div>
             <div class="stat-label">地域を支え続ける</div>
           </div>
         </div>
@@ -2168,6 +2370,138 @@
                     石川県羽咋市を中心に、地域の皆様と長年にわたって信頼関係を築いてきた地元の企業です。
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CM -->
+    <section class="cm-section" id="cm">
+      <div class="cm-inner">
+        <div class="cm-label-wrap" data-reveal="up">
+          <span class="section-tag" style="color: rgba(255, 255, 255, 0.55)"
+            >Recruit Movie</span
+          >
+          <h2 class="cm-title">
+            一緒に働く<br /><em>仲間を募集しています!</em>
+          </h2>
+          <p
+            style="
+              font-size: 14px;
+              font-weight: 400;
+              color: rgba(255, 255, 255, 0.5);
+              line-height: 1.9;
+              margin-top: 20px;
+            "
+          >
+            トラックドライバーをはじめ、各事業で一緒に地域を支えてくれる仲間を募集しています。
+          </p>
+          <a
+            href="#contact"
+            class="btn-solid"
+            style="margin-top: 28px; display: inline-flex"
+            data-reveal="up"
+            data-delay="2"
+          >
+            採用についてお問い合わせ
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+        <div class="cm-player-wrap" data-reveal="up" data-delay="2">
+          <div class="cm-player" id="cmPlayer">
+            <video
+              id="cmVideo"
+              class="cm-video"
+              poster="cm_thumb.jpg"
+              preload="none"
+              playsinline
+              loop
+            >
+              <source src="cm.webm" type="video/webm" />
+              <source src="cm.mp4" type="video/mp4" />
+            </video>
+            <!-- Play button overlay -->
+            <button class="cm-play-btn" id="cmPlayBtn" aria-label="動画を再生">
+              <span class="cm-play-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </span>
+              <span class="cm-play-label">PLAY</span>
+            </button>
+            <!-- Progress bar -->
+            <div class="cm-controls" id="cmControls">
+              <div class="cm-progress" id="cmProgress">
+                <div class="cm-progress-fill" id="cmProgressFill"></div>
+              </div>
+              <div class="cm-ctrl-row">
+                <button
+                  class="cm-ctrl-btn"
+                  id="cmToggle"
+                  aria-label="再生/停止"
+                >
+                  <svg
+                    class="icon-pause"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                  </svg>
+                  <svg
+                    class="icon-play"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    style="display: none"
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </button>
+                <span class="cm-time" id="cmTime">0:00</span>
+                <button
+                  class="cm-ctrl-btn cm-mute-btn"
+                  id="cmMute"
+                  aria-label="ミュート"
+                >
+                  <svg
+                    class="icon-sound"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"
+                    />
+                  </svg>
+                  <svg
+                    class="icon-mute"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    style="display: none"
+                  >
+                    <path
+                      d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"
+                    />
+                  </svg>
+                </button>
+                <button
+                  class="cm-ctrl-btn cm-full-btn"
+                  id="cmFull"
+                  aria-label="全画面"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
@@ -2736,7 +3070,7 @@
                   営業時間：月〜金・木 8:00〜17:00（土日定休）
                 </div>
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d25528.194080793546!2d136.75485869730034!3d36.889767890439174!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5ff769a5d25ee1f7%3A0x2376dfe19193158a!2z5qCq5byP5Lya56S-IOS4iuaZug!5e0!3m2!1sja!2sjp!4v1773932251867!5m2!1sja!2sjp"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d820823.9910420914!2d135.404623478125!3d36.52170130000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5ff769a5d25ee1f7%3A0x2376dfe19193158a!2z5qCq5byP5Lya56S-IOS4iuaZug!5e0!3m2!1sja!2sjp!4v1773976713885!5m2!1sja!2sjp"
                   width="600"
                   height="450"
                   style="border: 0"
@@ -2965,7 +3299,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p class="footer-copy">© 2026 株式会社上智 All rights reserved.</p>
+          <p class="footer-copy">© 2025 株式会社上智 All rights reserved.</p>
           <div class="footer-legal">
             <a href="#">プライバシーポリシー</a><a href="#">サイトマップ</a
             ><a href="#">免責事項</a>
@@ -3119,6 +3453,109 @@
           );
           go.observe(grid);
         });
+
+      /* ── CM PLAYER ─────────────────────────────── */
+      (function () {
+        const video = document.getElementById("cmVideo");
+        const player = document.getElementById("cmPlayer");
+        const playBtn = document.getElementById("cmPlayBtn");
+        const toggle = document.getElementById("cmToggle");
+        const muteBtn = document.getElementById("cmMute");
+        const fullBtn = document.getElementById("cmFull");
+        const progress = document.getElementById("cmProgress");
+        const fill = document.getElementById("cmProgressFill");
+        const timeEl = document.getElementById("cmTime");
+        if (!video) return;
+
+        const iconPause = toggle.querySelector(".icon-pause");
+        const iconPlay = toggle.querySelector(".icon-play");
+        const iconSound = muteBtn.querySelector(".icon-sound");
+        const iconMute = muteBtn.querySelector(".icon-mute");
+
+        function fmt(s) {
+          const m = Math.floor(s / 60);
+          const sec = Math.floor(s % 60)
+            .toString()
+            .padStart(2, "0");
+          return `${m}:${sec}`;
+        }
+
+        function startPlay() {
+          video.play();
+          playBtn.classList.add("hidden");
+          player.classList.add("playing");
+          iconPause.style.display = "";
+          iconPlay.style.display = "none";
+        }
+
+        function pausePlay() {
+          video.pause();
+          player.classList.remove("playing");
+          iconPause.style.display = "none";
+          iconPlay.style.display = "";
+        }
+
+        // Click play button overlay
+        playBtn.addEventListener("click", startPlay);
+
+        // Click player area (not controls)
+        player.addEventListener("click", (e) => {
+          if (
+            e.target.closest(".cm-controls") ||
+            e.target.closest(".cm-play-btn")
+          )
+            return;
+          video.paused ? startPlay() : pausePlay();
+        });
+
+        // Toggle button
+        toggle.addEventListener("click", (e) => {
+          e.stopPropagation();
+          video.paused ? startPlay() : pausePlay();
+        });
+
+        // Mute
+        muteBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          video.muted = !video.muted;
+          iconSound.style.display = video.muted ? "none" : "";
+          iconMute.style.display = video.muted ? "" : "none";
+        });
+
+        // Fullscreen
+        fullBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (document.fullscreenElement) {
+            document.exitFullscreen();
+          } else {
+            player.requestFullscreen && player.requestFullscreen();
+          }
+        });
+
+        // Progress update
+        video.addEventListener("timeupdate", () => {
+          if (!video.duration) return;
+          const pct = (video.currentTime / video.duration) * 100;
+          fill.style.width = pct + "%";
+          timeEl.textContent =
+            fmt(video.currentTime) + " / " + fmt(video.duration);
+        });
+
+        // Seek
+        progress.addEventListener("click", (e) => {
+          const rect = progress.getBoundingClientRect();
+          const pct = (e.clientX - rect.left) / rect.width;
+          video.currentTime = pct * video.duration;
+        });
+
+        // Ended
+        video.addEventListener("ended", () => {
+          pausePlay();
+          playBtn.classList.remove("hidden");
+          fill.style.width = "0%";
+          timeEl.textContent = "0:00";
+        });
+      })();
     </script>
   </body>
 </html>
